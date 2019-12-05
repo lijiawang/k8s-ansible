@@ -1,0 +1,5 @@
+---
+imageRepository: "registry.aliyuncs.com/google_containers"
+podSubnet: "192.168.0.0/16"  #  我们这里是准备安装 calico 网络插件的，需要将 networking.podSubnet 设置为192.168.0.0/16
+serviceSubnet: "10.96.0.0/12"
+nicnet: "eth0"

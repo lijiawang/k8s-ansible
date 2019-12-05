@@ -1,0 +1,18 @@
+---
+- hosts: all
+  roles:
+  - { role: basic,
+      tags: basic }
+
+  - { role: docker,
+      tags: docker }
+
+  - { role: kubeadm,
+      tags: kubeadm }
+  - { role: k8s, 
+      tags: k8s  }                    #when: k8s_version.startswith('1.10.')}
+
+  - { role: calico,
+      tags: calico }
+#  - { role: node,
+#      tags: node }

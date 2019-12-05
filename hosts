@@ -1,0 +1,9 @@
+[all]
+k8s-master
+
+[node]
+
+[all:vars]
+docker_version=docker-ce-18.06.0.ce-3.el7
+k8s_version=1.16.3
+apiserverip=10.122.17.200

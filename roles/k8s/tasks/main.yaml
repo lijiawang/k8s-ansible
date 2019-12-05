@@ -1,0 +1,14 @@
+---
+- name: 设置kubelet自启动
+  service: name=kubelet state=restarted enabled=yes  daemon_reload=yes
+- name: 配置文件分发
+  template: 
+    src=templates/config.conf.j2    dest=/root/kubeadm-config-{{k8s_version}}.yaml
+#  when:  order  is defined
+- name: 配置文件提前拉取镜像
+  shell: kubeadm config images pull --config /root/kubeadm-config-{{k8s_version}}.yaml
+- name: kubeadm init初始化master
+  shell: kubeadm  init --config /root/kubeadm-config-{{k8s_version}}.yaml
+
+- name:  inited
+  shell: mkdir -p $HOME/.kube  && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  &&  sudo chown $(id -u):$(id -g) $HOME/.kube/config

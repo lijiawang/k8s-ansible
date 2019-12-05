@@ -1,0 +1,7 @@
+---
+- name: 升级系统所有的包
+  yum:
+    name: '*'
+    state: latest
+- name: 重启系统
+  shell: init 6

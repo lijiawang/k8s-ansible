@@ -1,0 +1,5 @@
+---
+- name: 下发calico.yaml
+  copy: src=templates/calico.yaml.j2  dest=/root/kube-calico.yaml
+- name: 部署calico
+  shell: kubectl apply -f /root/kube-calico.yaml
