@@ -2,6 +2,9 @@
   copy: 
     src: files/kubernetes.repo 
     dest: /etc/yum.repos.d/kubernetes.repo
+- name: 清除缓存
+  shell: yum clean all && yum makecache fast -y
+
 - name: 安装kubeadm{{k8s_version}},kubectl{{k8s_version}},kubelet{{k8s_version}}
   yum:  name={{item}}-{{k8s_version}}-0.x86_64 state=present
   with_items:

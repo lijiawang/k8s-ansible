@@ -9,6 +9,7 @@
       - lvm2
 - name: 添加docker源
   shell: yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+  ignore_errors: true
 - name: 建立缓存
   shell: yum makecache fast
 - name: 安装docker
@@ -17,7 +18,7 @@
 - name: 配置docker加速
   copy:
    src: files/daemon.json
-   dest: /etc/docker/daemon.json
+   dest: /etc/docker/
   notify:
    restrt docker
   

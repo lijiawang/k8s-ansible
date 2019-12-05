@@ -1,14 +1,22 @@
 ---
+- name: 验证
+  shell: kubectl get cs
+  register: k8s_cluster
+  ignore_errors: true
 - name: 设置kubelet自启动
   service: name=kubelet state=restarted enabled=yes  daemon_reload=yes
 - name: 配置文件分发
   template: 
     src=templates/config.conf.j2    dest=/root/kubeadm-config-{{k8s_version}}.yaml
+  when: k8s_cluster.rc != 0
 #  when:  order  is defined
 - name: 配置文件提前拉取镜像
   shell: kubeadm config images pull --config /root/kubeadm-config-{{k8s_version}}.yaml
+  when: k8s_cluster.rc != 0
 - name: kubeadm init初始化master
   shell: kubeadm  init --config /root/kubeadm-config-{{k8s_version}}.yaml
+  when: k8s_cluster.rc != 0
 
 - name:  inited
   shell: mkdir -p $HOME/.kube  && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  &&  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  when: k8s_cluster.rc != 0

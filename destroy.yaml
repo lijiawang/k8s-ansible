@@ -1,0 +1,27 @@
+---
+- hosts: node
+  become: yes
+  tasks:
+  - name: reset node
+    shell: yes | kubeadm reset 
+  - name: 删除/etc/kubernetes
+    file:
+     path: /etc/kubernetes
+     state: absent
+
+- hosts: master
+  become: yes
+  tasks:
+  - name: reset master
+    shell: yes | kubeadm reset
+  - name: 删除
+    file:
+     path: "{{ item }}"
+     state: absent
+    with_items:
+        - "/etc/kubernetes"
+        - "$HOME/.kube"
+        - "/var/lib/calico"
+        - "/var/lib/cni"
+
+  

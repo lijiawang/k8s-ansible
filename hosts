@@ -1,7 +1,12 @@
 [all]
-k8s-master
 
+[master]
+k8s-master 
 [node]
+k8s-node01
+k8s-node02
+k8s-node04
+k8s-node03
 
 [all:vars]
 docker_version=docker-ce-18.06.0.ce-3.el7
